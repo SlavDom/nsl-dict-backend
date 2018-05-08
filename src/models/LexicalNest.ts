@@ -1,5 +1,6 @@
-import {Column, HasMany, Model, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, Model, Table} from "sequelize-typescript";
 import {Word} from "./Word";
+import {LexicalNestWord} from "./LexicalNestWord";
 
 @Table
 export class LexicalNest extends Model<LexicalNest> {
@@ -10,6 +11,6 @@ export class LexicalNest extends Model<LexicalNest> {
   @Column
   name: string;
 
-  @HasMany(() => Word)
+  @BelongsToMany(() => Word, () => LexicalNestWord)
   words: Word[];
 }

@@ -1,16 +1,12 @@
-import * as Sequelize from 'sequelize';
+import {Sequelize} from 'sequelize-typescript';
 
-const sequelize = new Sequelize('nsl-dict', 'admin', 'admin', {
-  host: 'localhost',
+const sequelize = new Sequelize({
+  database: 'nsl',
+  username: 'admin',
+  password: '',
   dialect: 'sqlite',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
   storage: './my.db',
-  operatorsAliases: false
+  modelPaths: [__dirname + '../models']
 });
 
 export default sequelize;

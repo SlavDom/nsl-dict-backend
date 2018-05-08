@@ -1,4 +1,6 @@
 import {Column, ForeignKey, Model, Table} from "sequelize-typescript";
+import {Word} from "./Word";
+import {LexicalNest} from "./LexicalNest";
 
 @Table
 export class LexicalNestWord extends Model<LexicalNestWord> {
@@ -6,7 +8,7 @@ export class LexicalNestWord extends Model<LexicalNestWord> {
     @Column
     wordId: number;
 
-    @ForeignKey(() => Tag)
+    @ForeignKey(() => LexicalNest)
     @Column
     nestId: number;
 }
