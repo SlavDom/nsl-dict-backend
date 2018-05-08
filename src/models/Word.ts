@@ -6,6 +6,11 @@ import {Tag} from "./Tag";
 import {Meaning} from "./Meaning";
 import {Synonym} from "./Synonym";
 import {Antonym} from "./Antonym";
+import {LexicalNestWord} from './LexicalNestWord';
+import {Suffix} from './Suffix';
+import {Prefix} from './Prefix';
+import {WordSuffix} from './WordSuffix';
+import {WordPrefix} from './WordPrefix';
 
 @Table
 export class Word extends Model<Word> {
@@ -25,12 +30,8 @@ export class Word extends Model<Word> {
   @Column
   decl: number;
 
-  @ForeignKey(() => LexicalNest)
-  @Column
-  lexicalNestId: number;
-
-  @BelongsTo(() => LexicalNest)
-  lexicalNest: LexicalNest;
+  @BelongsToMany(() => LexicalNest, () => LexicalNestWord)
+  lexicalNests: LexicalNest[];
 
   @ForeignKey(() => Part)
   @Column
@@ -41,6 +42,15 @@ export class Word extends Model<Word> {
 
   @BelongsToMany(() => Tag, () => WordTag)
   authors: Tag[];
+
+  @BelongsToMany(() => Suffix, () => WordSuffix)
+  suffixes: Suffix[];
+
+  @BelongsToMany(() => Prefix, () => WordPrefix)
+  prefixes: Prefix[];
+
+  @Column
+  ending: string;
 
   @HasMany(() => Meaning)
   words: Meaning[];
