@@ -1,6 +1,9 @@
 import {Router} from 'express';
 import nests from "./nests";
 import parts from './parts';
+import words from "./words";
+import suffixes from "./suffixes";
+import prefixes from "./prefixes";
 
 const router: Router = Router();
 
@@ -11,5 +14,8 @@ router.route('/')
 
 nests(router);
 parts(router);
+words(router);
+suffixes(router);
+prefixes(router);
 
 export default router;
