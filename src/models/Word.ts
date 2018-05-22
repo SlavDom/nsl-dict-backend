@@ -1,4 +1,4 @@
-import {BelongsTo, BelongsToMany, Column, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
+import {BelongsTo, BelongsToMany, Column, ForeignKey, HasMany, Model, Table, Unique} from "sequelize-typescript";
 import {LexicalNest} from "./LexicalNest";
 import {Part} from "./Part";
 import {WordTag} from "./WordTag";
@@ -15,6 +15,7 @@ import {WordPrefix} from './WordPrefix';
 @Table
 export class Word extends Model<Word> {
 
+  @Unique
   @Column
   value: string;
 
@@ -41,7 +42,7 @@ export class Word extends Model<Word> {
   part: Part;
 
   @BelongsToMany(() => Tag, () => WordTag)
-  authors: Tag[];
+  tags: Tag[];
 
   @BelongsToMany(() => Suffix, () => WordSuffix)
   suffixes: Suffix[];
