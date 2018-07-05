@@ -8,6 +8,7 @@ import {WordPrefix} from "../models/WordPrefix";
 import {WordSuffix} from "../models/WordSuffix";
 import {WordTag} from "../models/WordTag";
 import {LexicalNestWord} from "../models/LexicalNestWord";
+import authenticated from "../middlewares/authenticated";
 
 export interface IWordAdd {
   word: {
@@ -32,7 +33,7 @@ export default function (router) {
         res.status(200).send(result);
       });
     })
-    .post(async function (req, res) {
+    .post(authenticated, async function (req, res) {
       const data: IWordAdd = req.body;
       const lexicalNests = [];
       const prefixes = [];

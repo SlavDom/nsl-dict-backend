@@ -1,5 +1,6 @@
 import { Tag } from "../models/Tag";
 import { LexicalNest } from "../models/LexicalNest";
+import authenticated from "../middlewares/authenticated";
 
 export default function (router) {
   router.route('/nests')
@@ -23,7 +24,7 @@ export default function (router) {
         });
       }
     })
-    .post(function (req, res, next) {
+    .post(authenticated, function (req, res, next) {
       const newNest: string = req.body;
       LexicalNest.insertOrUpdate(newNest).then(() => {
         res.sendStatus(202);
