@@ -7,8 +7,7 @@ import * as bcrypt from 'bcrypt';
 export default function (router: Router) {
   router.route('/auth/login').post(function (req, res) {
     passport.authenticate('local', (err, userResponse, info) => {
-      const user = {...userResponse.dataValues};
-      console.log(user);
+      const user = userResponse && {...(userResponse.dataValues || {})};
       if (err || !user) {
         return res.status(400).json({
           message: 'Bad request',

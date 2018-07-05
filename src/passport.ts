@@ -21,7 +21,7 @@ passport.use('local', new LocalStrategy({
           }
         });
       })
-      .catch(err => cb(err));
+      .catch(err => console.log(err) || cb(err));
   }));
 
 passport.use('jwt', new JWTStrategy({

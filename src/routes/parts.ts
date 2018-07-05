@@ -1,6 +1,7 @@
 import { Part } from "../models/Part";
 import {Response} from "express";
 import authenticated from "../middlewares/authenticated";
+import isAdmin from "../middlewares/isAdmin";
 
 export default function (router) {
   router.route('/parts')
@@ -9,7 +10,7 @@ export default function (router) {
           res.status(200).send(result);
         });
       })
-    .post(authenticated, function (req, res) {
+    .post(authenticated, isAdmin, function (req, res) {
         Part.insertOrUpdate(req.body).then(() => {
           res.sendStatus(202);
         });

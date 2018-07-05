@@ -1,5 +1,6 @@
 import {Suffix} from "../models/Suffix";
 import authenticated from "../middlewares/authenticated";
+import isAdmin from "../middlewares/isAdmin";
 
 export default function (router) {
   router.route('/suffixes')
@@ -8,7 +9,7 @@ export default function (router) {
         res.status(200).send(result);
       });
     })
-    .post(authenticated, function (req, res) {
+    .post(authenticated, isAdmin, function (req, res) {
       Suffix.insertOrUpdate(req.body).then(() => {
         res.sendStatus(202);
       });

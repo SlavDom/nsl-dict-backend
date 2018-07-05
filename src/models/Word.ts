@@ -31,6 +31,9 @@ export class Word extends Model<Word> {
   @Column
   decl: number;
 
+  @Column
+  ending: string;
+
   @BelongsToMany(() => LexicalNest, () => LexicalNestWord)
   lexicalNests: LexicalNest[];
 
@@ -49,9 +52,6 @@ export class Word extends Model<Word> {
 
   @BelongsToMany(() => Prefix, () => WordPrefix)
   prefixes: Prefix[];
-
-  @Column
-  ending: string;
 
   @HasMany(() => Meaning)
   words: Meaning[];

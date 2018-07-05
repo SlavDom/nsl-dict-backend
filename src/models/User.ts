@@ -1,4 +1,5 @@
-import {Column, Model, Table, Unique} from "sequelize-typescript";
+import {Column, DataType, Model, Table, Unique} from "sequelize-typescript";
+import {ROLES} from "../lib/enum";
 
 @Table
 export class User extends Model<User> {
@@ -9,5 +10,8 @@ export class User extends Model<User> {
 
   @Column
   password: string;
+
+  @Column(DataType.STRING)
+  role: ROLES;
 
 }

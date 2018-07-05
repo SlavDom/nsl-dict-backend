@@ -2,6 +2,7 @@ import {Prefix} from "../models/Prefix";
 import authenticated from "../middlewares/authenticated";
 import {Router} from "express";
 import * as passport from "passport";
+import isAdmin from "../middlewares/isAdmin";
 
 export default function (router: Router) {
   router.route('/prefixes')
@@ -10,7 +11,7 @@ export default function (router: Router) {
         res.status(200).send(result);
       });
     })
-    .post(authenticated, function (req, res, next) {
+    .post(authenticated, isAdmin, function (req, res, next) {
       const data = req.body;
       if (Object.keys(data).length > 0) {
         Prefix.insertOrUpdate(req.body).then(() => {
