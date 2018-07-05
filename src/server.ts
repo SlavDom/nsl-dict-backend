@@ -3,7 +3,7 @@ import * as http from 'http';
 import app from './app';
 
 const debug = require('debug')('nsl-dict-backend:server');
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
 const server = http.createServer(app);

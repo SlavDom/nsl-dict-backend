@@ -6,24 +6,22 @@ import * as bcrypt from 'bcrypt';
 
 export default function (router: Router) {
   router.route('/auth/login').post(function (req, res) {
-      console.log(req.body);
-      return passport.authenticate('local', (err, user, info) => {
-        console.log(err);
-        if (err || !user) {
-          return res.status(400).json({
-            message: 'Bad request',
-            user,
-          });
-        }
-        console.log(err, user, info);
-        req.logIn(user, { session: false }, err => {
-          if (err) {
-            res.send(err);
-          }
+    passport.authenticate('local', (err, userResponse, info) => {
+      const user = userResponse.dataValues;
+      if (err || !user) {
+        return res.status(400).json({
+          message: 'Bad request',
+          user,
         });
-        const token = jwt.sign(user, '1234567890');
-        return res.json({ user, token });
+      }
+      req.logIn(user, {session: false}, err => {
+        if (err) {
+          res.send(err);
+        }
       });
+      const token = jwt.sign(user, '1234567890');
+      return res.json({user, token});
+    })(req, res);
     });
 
   router.route('/auth/register')
