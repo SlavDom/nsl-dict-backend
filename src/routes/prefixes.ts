@@ -10,9 +10,14 @@ export default function (router: Router) {
         res.status(200).send(result);
       });
     })
-    .post(passport.authenticate('jwt', {session: false}), function (req, res, next) {
-      Prefix.insertOrUpdate(req.body).then(() => {
-        res.sendStatus(202);
-      });
+    .post(authenticated, function (req, res, next) {
+      const data = req.body;
+      if (Object.keys(data).length > 0) {
+        Prefix.insertOrUpdate(req.body).then(() => {
+          res.sendStatus(202);
+        });
+      } else {
+        res.sendStatus(400);
+      }
     });
 }

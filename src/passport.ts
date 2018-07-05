@@ -25,13 +25,12 @@ passport.use('local', new LocalStrategy({
   }));
 
 passport.use('jwt', new JWTStrategy({
-  jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   secretOrKey: '1234567890',
 }, function (jwtPayload: any, cb: (err: string, user?: any) => any) {
-  console.log(jwtPayload);
   return User.findOne({ where: { id: jwtPayload.id } })
     .then(user => cb(null, user))
-    .catch((err: string) => console.log('asadasd', err) || cb(err))
+    .catch((err: string) => cb(err))
 }));
 
 passport.serializeUser(function (user: User, done) {

@@ -7,7 +7,8 @@ import * as bcrypt from 'bcrypt';
 export default function (router: Router) {
   router.route('/auth/login').post(function (req, res) {
     passport.authenticate('local', (err, userResponse, info) => {
-      const user = userResponse.dataValues;
+      const user = {...userResponse.dataValues};
+      console.log(user);
       if (err || !user) {
         return res.status(400).json({
           message: 'Bad request',
@@ -19,7 +20,8 @@ export default function (router: Router) {
           res.send(err);
         }
       });
-      const token = jwt.sign(user, '1234567890');
+      delete user.password;
+      const token = jwt.sign(user, '1234567890', { expiresIn: 3600 });
       return res.json({user, token});
     })(req, res);
     });
