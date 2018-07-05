@@ -4,6 +4,7 @@ import parts from './parts';
 import words from "./words";
 import suffixes from "./suffixes";
 import prefixes from "./prefixes";
+import auth from "./auth";
 
 const router: Router = Router();
 
@@ -12,6 +13,7 @@ router.route('/')
     res.sendStatus(200);
   });
 
+auth(router);
 nests(router);
 parts(router);
 words(router);

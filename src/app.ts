@@ -6,11 +6,23 @@ import indexRouter from './routes/index';
 import {Express} from "express";
 import connect from "./db/connect";
 
+import * as passport from "passport";
+import session = require("express-session");
+
 const app: Express = express();
+import './passport';
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+  secret: '1234567890',
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 

@@ -13,6 +13,7 @@ import {Part} from "../models/Part";
 import {LexicalNest} from "../models/LexicalNest";
 import {LexicalNestWord} from "../models/LexicalNestWord";
 import {Example} from "../models/Example";
+import {User} from "../models/User";
 
 export default function () {
   sequelize.addModels([
@@ -29,7 +30,8 @@ export default function () {
     Part,
     LexicalNest,
     LexicalNestWord,
-    Example
+    Example,
+    User,
   ]);
 
   sequelize.sync();
