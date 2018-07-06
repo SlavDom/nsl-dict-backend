@@ -40,28 +40,32 @@ export default function (router) {
       const prefixes = [];
       const suffixes = [];
       const tags = [];
-      data.lexicalNests.map(async nest => {
-        lexicalNests.push(await LexicalNest.find({ where: { name: nest }}));
-      });
-      data.prefixes.forEach(async prefix => {
-        prefixes.push(await Prefix.find({ where: { name: prefix }}));
-      });
-      data.suffixes.forEach(async suffix => {
-        suffixes.push(await Suffix.find({ where: { name: suffix }}));
-      });
-      data.tags.forEach(async tag => {
-        tags.push(await Tag.find({ where: { name: tag }}));
-      });
-      const part = await Part.find({ where: { name: data.word.part }});
-      await Word.insertOrUpdate({
-        value: data.word.value,
-        en: data.word.english,
-        eo: data.word.esperanto,
-        conj: data.word.conjugation,
-        decl: data.word.declension,
-        ending: data.ending,
-        partId: part.id,
-      });
+      try {
+        data.lexicalNests.map(async nest => {
+          lexicalNests.push(await LexicalNest.find({where: {name: nest}}));
+        });
+        data.prefixes.forEach(async prefix => {
+          prefixes.push(await Prefix.find({where: {name: prefix}}));
+        });
+        data.suffixes.forEach(async suffix => {
+          suffixes.push(await Suffix.find({where: {name: suffix}}));
+        });
+        data.tags.forEach(async tag => {
+          tags.push(await Tag.find({where: {name: tag}}));
+        });
+        const part = await Part.find({where: {name: data.word.part}});
+        await Word.insertOrUpdate({
+          value: data.word.value,
+          en: data.word.english,
+          eo: data.word.esperanto,
+          conj: data.word.conjugation,
+          decl: data.word.declension,
+          ending: data.ending,
+          partId: part.id,
+        });
+      } catch (e) {
+        res.sendStatus(401);
+      }
       const word = await Word.find({ where: { value: data.word.value }});
       if (word) {
         prefixes.forEach(async prefix =>

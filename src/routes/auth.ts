@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 export default function (router: Router) {
   router.route('/auth/login').post(function (req, res) {
+    console.log(req, req.body);
     passport.authenticate('local', (err, userResponse, info) => {
       const user = userResponse && {...(userResponse.dataValues || {})};
       if (err || !user) {
@@ -31,7 +32,7 @@ export default function (router: Router) {
         return User
           .create({ username: req.body.username, password: data })
           .then(a => res.sendStatus(201))
-          .catch(e => res.sendStatus(400));
+          .catch(e => console.log(e) || res.sendStatus(400));
       });
     });
 }

@@ -10,11 +10,12 @@ import * as passport from "passport";
 import session = require("express-session");
 
 const app: Express = express();
-import './passport';
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+
+import './passport';
 
 app.use(session({
   secret: '1234567890',
