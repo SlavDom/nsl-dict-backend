@@ -1,27 +1,21 @@
 import * as createError from 'http-errors';
 import * as express from 'express';
 import * as logger from 'morgan';
+import * as bodyParser from 'body-parser';
 
 import indexRouter from './routes/index';
 import {Express} from "express";
 import connect from "./db/connect";
 
 import * as passport from "passport";
-import session = require("express-session");
 
 const app: Express = express();
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 import './passport';
-
-app.use(session({
-  secret: '1234567890',
-  resave: false,
-  saveUninitialized: false,
-}));
 
 app.use(passport.initialize());
 
